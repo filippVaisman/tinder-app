@@ -57,7 +57,6 @@ class TinderCoreCommand extends Command
             sleep(10);
         }
 
-
         return 0;
     }
 }

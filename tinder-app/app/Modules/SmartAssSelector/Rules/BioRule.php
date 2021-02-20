@@ -9,7 +9,11 @@ class BioRule extends Rule
 {
     protected array $acceptedBioCombinations = [
         '🇺🇦',
-        '🇷🇺'
+        '🇷🇺',
+        'ua/',
+        '/ua',
+        '/ru',
+        'ru/'
     ];
 
     protected $singleWords = [

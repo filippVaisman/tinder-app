@@ -4,6 +4,7 @@ namespace App\Modules\TinderApi\Services;
 
 use App\Modules\DataModels\TinderApi\TinderUser;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class RequestService
 {
@@ -18,6 +19,8 @@ class RequestService
             config('core.endpoints.list.url'),
             ['headers' => config('core.required_headers')]
         );
+
+        Log::info('Generate list request result code: '. $r->getStatusCode());
 
         $rawUsers = collect(
             json_decode(
@@ -44,11 +47,12 @@ class RequestService
         $client = new Client();
         $url = $this->prepareUrl(config('core.endpoints.like.url'), $tinderUser->getId());
 
-        $client->request(
+        $r = $client->request(
             config('core.endpoints.like.method'),
             $url,
             ['headers' => config('core.required_headers')]
         );
+        Log::info('Like request result code: '. $r->getStatusCode());
     }
 
     /**
