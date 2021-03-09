@@ -32,7 +32,7 @@ class RequestService
         $users = collect();
         foreach ($rawUsers as $user) {
             $users->add(
-                TinderUser::fromArray($user['user'])
+                TinderUser::fromArray($user['user'])->parseInstagram()
             );
         }
 
@@ -42,7 +42,7 @@ class RequestService
     /**
      * @param TinderUser $tinderUser
      */
-    public function likeUser(TinderUser $tinderUser)
+    public function likeUser(TinderUser $tinderUser): void
     {
         $client = new Client();
         $url = $this->prepareUrl(config('core.endpoints.like.url'), $tinderUser->getId());
@@ -52,7 +52,23 @@ class RequestService
             $url,
             ['headers' => config('core.required_headers')]
         );
-        Log::info('Like request result code: '. $r->getStatusCode());
+        Log::info('Like user: request result code: '. $r->getStatusCode());
+    }
+
+    /**
+     * @param TinderUser $tinderUser
+     */
+    public function passUser(TinderUser $tinderUser): void
+    {
+        $client = new Client();
+        $url = $this->prepareUrl(config('core.endpoints.pass.url'), $tinderUser->getId());
+
+        $r = $client->request(
+            config('core.endpoints.pass.method'),
+            $url,
+            ['headers' => config('core.required_headers')]
+        );
+        Log::info('Pass request result code: '. $r->getStatusCode());
     }
 
     /**

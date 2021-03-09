@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property array photos
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property string instagram_nick
+ * @property string instagram_url
  */
 class Like extends Model
 {

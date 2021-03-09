@@ -13,14 +13,14 @@ class LikesTest extends TestCase
         $u = TinderUser::fromArray(
             [
                 "badges" => [],
-                "bio" => "Ig. namro__",
+                "bio" => "Ig. namro__ @asd",
                 "birth_date" => "1999-02-23T10:31:00.339Z",
                 "name" => "Sasha",
                 "recently_active" => true,
                 "_id" => '1',
-                'photos' => [['id' => '123123123', 'url' => 'http:123'] , ['id' => '213123']]
+                'photos' => [['id' => '123123123', 'url' => 'http:123'] , ['id' => '213123']],
             ]
-        );
+        )->parseInstagram();
 
         $e->create($u->toArray());
     }

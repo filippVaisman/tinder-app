@@ -2,6 +2,7 @@
 
 namespace App\Modules\SmartAssSelector\Services;
 
+use App\Modules\DataModels\SmartAssSelector\AnalysedUser;
 use App\Modules\DataModels\TinderApi\TinderUser;
 use App\Modules\SmartAssSelector\Rules\Rule;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +13,7 @@ class TinderUserAnalyser
      * @param TinderUser $tinderUser
      * @return bool
      */
-    public function analyse(TinderUser $tinderUser): bool
+    public function analyseOne(TinderUser $tinderUser): bool
     {
         // TODO: refactor shitty app()->make
         /** @var Rule $rule */
@@ -26,5 +27,23 @@ class TinderUserAnalyser
         }
 
         return false;
+    }
+
+    /**
+     * @param array $tinderUsers
+     *
+     * @return AnalysedUser[]
+     */
+    public function analyse(array $tinderUsers): array
+    {
+        $analysed = [];
+        foreach ($tinderUsers as $tinderUser) {
+            $analysed[] = new AnalysedUser(
+                $this->analyseOne($tinderUser),
+                $tinderUser
+            );
+        }
+
+        return $analysed;
     }
 }

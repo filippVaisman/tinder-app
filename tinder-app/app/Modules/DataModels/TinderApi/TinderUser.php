@@ -4,28 +4,33 @@ namespace App\Modules\DataModels\TinderApi;
 
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class TinderUser
 {
-    protected string|null $id = null;
+    protected ?string $id = null;
 
-    protected string|null $recType = null;
+    protected ?string $recType = null;
 
-    protected array|null $badges = null;
+    protected ?array $badges = null;
 
-    protected string|null $bio = null;
+    protected ?string $bio = null;
 
-    protected Carbon|null $birthdayDate = null;
+    protected ?Carbon $birthdayDate = null;
 
-    protected string|null $name = null;
+    protected ?string $name = null;
 
-    protected int|null $gender = null;
+    protected ?int $gender = null;
 
-    protected array|null $jobs = null;
+    protected ?array $jobs = null;
 
-    protected bool|null $recentlyActive = null;
+    protected ?bool $recentlyActive = null;
 
-    protected array|null $photos = [];
+    protected ?array $photos = [];
+
+    protected ?string $instagramNick;
+
+    protected ?string $instagramUrl;
 
     /**
      * @param array $data
@@ -46,6 +51,19 @@ class TinderUser
     }
 
     /**
+     * @return $this
+     */
+    public function parseInstagram(): self
+    {
+        preg_match('/@[a-zA-Z_=+-]+/', $this->bio, $matches);
+        $this->instagramNick = Arr::get($matches, '0');
+        $this->instagramUrl = config('core.instagram_url') .
+            str_replace('@','',$this->instagramNick);
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -58,7 +76,9 @@ class TinderUser
             'name' => $this->name,
             'gender' => $this->gender,
             'jobs' => $this->jobs,
-            'photos' => $this->photos
+            'photos' => $this->photos,
+            'instagram_nick' => $this->instagramNick,
+            'instagram_url' => $this->instagramUrl
         ];
     }
 

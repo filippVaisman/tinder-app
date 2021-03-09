@@ -47,14 +47,20 @@ class TinderCoreCommand extends Command
         while (true) {
             $users = $requestService->generateList();
 
-            foreach ($analyser->getFittingUsers($users) as $user) {
-                $requestService->likeUser($user);
-                $likesEnvoy->create($user);
-                echo "Girl ". $user->getId(). " ". $user->getName(). " ". " is fitting you !\n";
-                sleep(2);
+            foreach ($analyser->analyse($users) as $analysedUser) {
+                $tinderUser = $analysedUser->getTinderUser();
+
+                if($analysedUser->getFitting()) {
+                    $requestService->likeUser($tinderUser);
+                    echo "Girl ". $tinderUser->getId(). " ". $tinderUser->getName(). " ". " is fitting you !\n";
+                    $likesEnvoy->create($tinderUser);
+                } else {
+                    $requestService->passUser($tinderUser);
+                }
+                sleep(rand(1,4));
             }
 
-            sleep(10);
+            sleep(rand(1,2));
         }
 
         return 0;

@@ -3,7 +3,7 @@
 namespace App\Modules\SmartAssSelector\Envoys;
 
 
-use App\Modules\DataModels\TinderApi\TinderUser;
+use App\Modules\DataModels\SmartAssSelector\AnalysedUser;
 use App\Modules\SmartAssSelector\Services\TinderUserAnalyser;
 
 class AnalyserEnvoy
@@ -23,19 +23,12 @@ class AnalyserEnvoy
     }
 
     /**
-     * @param TinderUser[] $users
+     * @param array $users
      *
-     * @return TinderUser[]
+     * @return AnalysedUser[]
      */
-    public function getFittingUsers(array $users): array
+    public function analyse(array $users): array
     {
-        return array_values(
-            array_filter(
-                $users,
-                function (TinderUser $user) {
-                    return $this->analyser->analyse($user);
-                }
-            )
-        );
+        return $this->analyser->analyse($users);
     }
 }

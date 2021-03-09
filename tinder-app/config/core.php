@@ -13,7 +13,10 @@ return [
             'method' => 'POST',
             'url' => 'https://api.gotinder.com/like/'
         ],
-
+        'pass' => [
+            'method' => 'POST',
+            'url' => 'https://api.gotinder.com/pass/'
+        ]
     ],
     'required_headers' => [
         'accept' => 'application/json',
@@ -33,13 +36,14 @@ return [
         'sec-fetch-site' => 'cross-site',
         'tinder-version' => '2.74.0',
         'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36',
-        'user-session-id' => '5b66043c-4d8a-4268-ae96-9fa48c1f6b9e',
-        'user-session-time-elapsed' => '282397',
-        'x-auth-token' => '90a7661d-795c-45ce-aba5-2d47fd695a93',
+        'user-session-id' => '514d83fa-de34-48e6-bbf4-3e091a7cd055',
+        'user-session-time-elapsed' => '11760',
+        'x-auth-token' => 'b11fb88c-f93d-4f88-b17a-61b267f30f09',
         'x-supported-image-formats' => 'jpeg',
     ],
     'analyser_rules' => [
         BioRule::class,
         NameRule::class
-    ]
+    ],
+    'instagram_url' => 'https://www.instagram.com/'
 ];
